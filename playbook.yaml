@@ -1,0 +1,48 @@
+---
+- name: Installation of httpd pkg
+  hosts: db
+  become: yes
+  tasks:
+    - name: Installation of httpd pkg in centos
+      yum:
+        name: httpd
+        state: present
+
+
+    - name: Starting and enabling the service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+- name : Installation of mysql sever in centos
+  hosts: db
+  become: yes
+  tasks:
+    - debug: 
+        var: root_username
+    - debug:
+        msg: "The root_username is {{root_username}}"
+
+    - name: Install Python PyMySQL library
+      dnf:
+        name: python3-PyMySQL
+        state: present
+  
+    - name: Installation of mysql serve in centos
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: start and enable the service in centos
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
+   
+    - name: creating the use name techaxis
+      mysql_db:
+        name: techaxis
+        state: present
+        login_user: '{{root_username}}'
+        login_password: '{{root_password}}'

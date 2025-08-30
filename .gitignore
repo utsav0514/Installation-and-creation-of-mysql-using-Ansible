@@ -1,0 +1,7 @@
+ansible.cfg  
+demo-key  
+demo-key.pub  
+inventory
+host_vars
+group_vars
+
