@@ -1,0 +1,21 @@
+---
+- name: Ansible playbook to check the OS version and install the vsftpd package
+  hosts: db
+  gather_facts: false
+  become: yes
+
+  tasks:
+    - name: Checking the machine OS version
+      command: cat /etc/os-release
+      register: os_version
+
+    - name: Show OS version
+      debug:
+        var: os_version.stdout
+
+    - name: Installing the vsftpd package if the version is CentOS Stream 9
+      yum:
+        name: vsftpd
+        state: present
+      when: "'CentOS Stream 9' in os_version.stdout"
+...

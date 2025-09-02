@@ -1,0 +1,15 @@
+---
+- name: Ansible playbook to chekc os distribution
+  hosts: all
+  become: yes
+  tasks:
+    - name: check whether the os distribution is RedHat or not
+      shell: 
+        echo "This is RedHat linux"
+      when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"
+    
+    - name: check wheter the os distribution is Ubuntu or not 
+      shell: 
+        echo "This is Ubuntu linux "
+      when: ansible_distribution == "Ubuntu"
+
